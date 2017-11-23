@@ -12,10 +12,7 @@ namespace CRUD.SQLLiteEF
     public class EmployeeContext : DbContext
     {
         public EmployeeContext() :
-            base(new SQLiteConnection()
-            {
-                ConnectionString = new SQLiteConnectionStringBuilder() { DataSource = @"D:\Database\SQLLIteWithEF.db"}.ConnectionString
-            }, true)
+            base("SQLLIteWithEF")
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
