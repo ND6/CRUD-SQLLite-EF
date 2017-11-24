@@ -17,8 +17,8 @@ namespace CRUD.SQLLiteEF
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<EmployeeMaster>().ToTable("EmployeeMaster");
         }
 
         public DbSet<EmployeeMaster> EmployeeMaster { get; set; }
