@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace CRUD.SQLLiteEF
 {
-    [Table(Name = "EmployeeMaster")]
+    //[Table(Name = "EmployeeMaster")]
     public class EmployeeMaster
     {
-        [Column(Name = "ID", IsDbGenerated = true, IsPrimaryKey = true, DbType = "INTEGER")]
+        //[Column(Name = "ID", IsDbGenerated = true, IsPrimaryKey = true, DbType = "INTEGER")]
         [Key]
         public int ID { get; set; }
 
-        [Column(Name = "EmpName", DbType = "VARCHAR")]
+        //[Column(Name = "EmpName", DbType = "VARCHAR")]
         public string EmpName { get; set; }
 
-        [Column(Name = "Salary", DbType = "DOUBLE")]
+        //[Column(Name = "Salary", DbType = "DOUBLE")]
         public double Salary { get; set; }
     } 
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite.CodeFirst;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -11,16 +12,29 @@ namespace CRUD.SQLLiteEF
 {
     public class EmployeeContext : DbContext
     {
-        public EmployeeContext() :
-            base("SQLLIteWithEF")
+        public EmployeeContext(string nameOrConnectionString) :
+            base(nameOrConnectionString)
         {
+            Configure();
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<EmployeeMaster>().ToTable("EmployeeMaster");
+            //base.OnModelCreating(modelBuilder);
+            //var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<EmployeeContext>(modelBuilder);
+
+            //modelBuilder.Entity<EmployeeMaster>().ToTable("EmployeeMaster");
+
+            ModelConfiguration.Configure(modelBuilder);
+            var initializer = new EmployeeDbInitializer(modelBuilder);
+            Database.SetInitializer(initializer);
         }
 
-        public DbSet<EmployeeMaster> EmployeeMaster { get; set; }
+        private void Configure()
+        {
+            Configuration.ProxyCreationEnabled = true;
+            Configuration.LazyLoadingEnabled = true;
+        }
+
+       // public DbSet<EmployeeMaster> EmployeeMaster { get; set; }
     }
 }

@@ -11,45 +11,46 @@ namespace CRUD.SQLLiteEF
     {
         public static void Main(string[] args)
         {
-            EmployeeContext context = new EmployeeContext();
-            EmployeeMaster employee = new EmployeeMaster()
+            using (var context = new EmployeeContext("SQLLIteWithEF"))
             {
-                EmpName = "Dika",
-                Salary = 1000000
-            };
+                EmployeeMaster employee = new EmployeeMaster()
+                {
+                    EmpName = "Dika",
+                    Salary = 1000000
+                };
 
-            int rowAffected =  context.Database.ExecuteSqlCommand("DELETE FROM EmployeeMaster");
-            Console.WriteLine(string.Format("{0} row Deleted", rowAffected));
+                //int rowAffected = context.Database.ExecuteSqlCommand("DELETE FROM EmployeeMaster");
+                //Console.WriteLine(string.Format("{0} row Deleted", rowAffected));
 
-            //Create
-            context.EmployeeMaster.Add(employee);
-            context.SaveChanges();
+                //Create
+                context.Set<EmployeeMaster>().Add(employee);
+                context.SaveChanges();
 
-            Console.WriteLine("Record After Insert :");
-            var data = context.EmployeeMaster.ToList();
-            DisplayData(data);
+                //Console.WriteLine("Record After Insert :");
+                //var data = context.EmployeeMaster.ToList();
+                //DisplayData(data);
 
-            var empUpdate = context.EmployeeMaster.Single(x => x.ID == 1);
-            empUpdate.EmpName = "Arta";
+                //var empUpdate = context.EmployeeMaster.Single(x => x.ID == 1);
+                //empUpdate.EmpName = "Arta";
 
-            //Update
-            context.EmployeeMaster.Attach(empUpdate);
-            context.Entry(empUpdate).State = EntityState.Modified;
-            context.SaveChanges();
+                ////Update
+                //context.EmployeeMaster.Attach(empUpdate);
+                //context.Entry(empUpdate).State = EntityState.Modified;
+                //context.SaveChanges();
 
-            Console.WriteLine("Record After Update :");
-            data = context.EmployeeMaster.ToList();
-            DisplayData(data);
+                //Console.WriteLine("Record After Update :");
+                //data = context.EmployeeMaster.ToList();
+                //DisplayData(data);
 
-            //Delete
-            context.EmployeeMaster.Attach(empUpdate);
-            context.Entry(empUpdate).State = EntityState.Deleted;
-            context.SaveChanges();
+                ////Delete
+                //context.EmployeeMaster.Attach(empUpdate);
+                //context.Entry(empUpdate).State = EntityState.Deleted;
+                //context.SaveChanges();
 
-            Console.WriteLine("Record After Delete :");
-            data = context.EmployeeMaster.ToList();
-            DisplayData(data);
-
+                //Console.WriteLine("Record After Delete :");
+                //data = context.EmployeeMaster.ToList();
+                //DisplayData(data);
+            }
             Console.ReadKey();
         }
 
